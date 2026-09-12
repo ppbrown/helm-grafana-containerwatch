@@ -1,6 +1,10 @@
 # helm-grafana-containerwatch
 
-Pre-configured cluster-wide container monitoring dashboard.
+Pre-configured **SIMPLE** cluster-wide container monitoring dashboard.
+
+Yes, [kube-prometheus-stack](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack) 
+exists. however, it is ludicrously over-complicated for what I want to see.
+
 
 ![Screenshot-2026-09-12.png](Screenshot-2026-09-12.png)
 
