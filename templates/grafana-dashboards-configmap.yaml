@@ -18,10 +18,21 @@ data:
           path: /etc/grafana/provisioning/dashboards
   containers.json: |
     {
-      "title": "Container Statuses (cAdvisor via Alloy)",
-      "uid": "x-grafana-containers",
-      "tags": ["containers", "cadvisor", "alloy"],
+      "title": "Container Statistics",
+      "uid": "containerwatch-containers",
+      "tags": ["containers", "containerwatch", "alloy"],
       "timezone": "",
+      "links": [
+        {
+          "type": "dashboards",
+          "title": "ContainerWatch dashboards",
+          "tags": ["containerwatch"],
+          "asDropdown": true,
+          "includeVars": true,
+          "keepTime": true,
+          "icon": "external link"
+        }
+      ],
       "schemaVersion": 39,
       "version": 1,
       "editable": true,
@@ -184,10 +195,21 @@ data:
     }
   pods.json: |
     {
-      "title": "Pod Statuses (cAdvisor via Alloy)",
-      "uid": "x-grafana-pods",
-      "tags": ["pods", "cadvisor", "alloy"],
+      "title": "Pod Statistics",
+      "uid": "containerwatch-pods",
+      "tags": ["pods", "containerwatch", "alloy"],
       "timezone": "",
+      "links": [
+        {
+          "type": "dashboards",
+          "title": "ContainerWatch dashboards",
+          "tags": ["containerwatch"],
+          "asDropdown": true,
+          "includeVars": true,
+          "keepTime": true,
+          "icon": "external link"
+        }
+      ],
       "schemaVersion": 39,
       "version": 1,
       "editable": true,
@@ -348,10 +370,21 @@ data:
     }
   namespaces.json: |
     {
-      "title": "Namespace Statuses (cAdvisor via Alloy)",
-      "uid": "x-grafana-namespaces",
-      "tags": ["namespaces", "cadvisor", "alloy"],
+      "title": "Namespace Statistics",
+      "uid": "containerwatch-namespaces",
+      "tags": ["namespaces", "containerwatch", "alloy"],
       "timezone": "",
+      "links": [
+        {
+          "type": "dashboards",
+          "title": "ContainerWatch dashboards",
+          "tags": ["containerwatch"],
+          "asDropdown": true,
+          "includeVars": true,
+          "keepTime": true,
+          "icon": "external link"
+        }
+      ],
       "schemaVersion": 39,
       "version": 1,
       "editable": true,
