@@ -2,6 +2,8 @@
 
 Pre-configured cluster-wide container monitoring dashboard.
 
+![Screenshot-2026-09-12.png](Screenshot-2026-09-12.png)
+
 Alloy (DaemonSet, built-in cAdvisor module) + Prometheus + Grafana, packaged
 as a Helm chart. Alloy collects per-container metrics on every node and
 pushes them to Prometheus via `remote_write`; Grafana comes pre-provisioned
