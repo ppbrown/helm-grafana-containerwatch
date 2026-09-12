@@ -40,3 +40,11 @@ grafana:
   dashboards:
     # Provisions the "Container Statuses" dashboard built for this stack.
     enabled: true
+  persistence:
+    # When disabled, Grafana's /var/lib/grafana uses an emptyDir and all
+    # dashboards/settings are lost on pod restart.
+    enabled: false
+    size: 1Gi
+    storageClassName: ""
+    # Set to reuse an existing PVC instead of creating one.
+    existingClaim: ""

@@ -22,9 +22,16 @@ with a Prometheus datasource and a "Container Statuses" dashboard.
 | `grafana.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
 | `grafana.ingress.enabled` / `.className` / `.host` / `.annotations` / `.tls` | `false` / `""` / `""` / `{}` / `[]` | Used if you set this up in "The Cloud" |
 | `grafana.dashboards.enabled` | `true` | Provisions the "Container Statuses" dashboard |
+| `grafana.persistence.enabled` | `false` | Use a PVC for `/var/lib/grafana` instead of `emptyDir` |
+| `grafana.persistence.size` | `1Gi` | |
+| `grafana.persistence.storageClassName` | `""` | Cluster default if unset |
+| `grafana.persistence.existingClaim` | `""` | Reuse an existing PVC instead of creating one |
 
-Prometheus and Grafana use `emptyDir` storage - data is lost on pod
-restart/reschedule.
+By default, Prometheus and Grafana use `emptyDir` storage - data is lost on pod
+restart/reschedule. For many people this is fine. However, to change to a
+persistent storage method, 
+set `grafana.persistence.enabled: true` to get a PVC (size/storageClassName
+configurable), or set `existingClaim` to reuse one. 
 
 ## Access
 

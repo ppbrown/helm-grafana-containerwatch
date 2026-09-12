@@ -41,4 +41,9 @@ spec:
             name: grafana-dashboards
         {{- end }}
         - name: data
+          {{- if .Values.grafana.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.grafana.persistence.existingClaim | default "grafana-data" }}
+          {{- else }}
           emptyDir: {}
+          {{- end }}
