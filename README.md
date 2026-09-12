@@ -20,7 +20,7 @@ with a Prometheus datasource and a "Container Statuses" dashboard.
 | `grafana.image.tag` | `13.2.1` | |
 | `grafana.adminUser` / `grafana.adminPassword` | `admin` / `admin` | Set via env vars, no forced first-login change |
 | `grafana.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
-| `grafana.ingress.enabled` / `.className` / `.host` / `.annotations` / `.tls` | `false` / `""` / `""` / `{}` / `[]` | |
+| `grafana.ingress.enabled` / `.className` / `.host` / `.annotations` / `.tls` | `false` / `""` / `""` / `{}` / `[]` | Used if you set this up in "The Cloud" |
 | `grafana.dashboards.enabled` | `true` | Provisions the "Container Statuses" dashboard |
 
 Prometheus and Grafana use `emptyDir` storage - data is lost on pod
@@ -28,13 +28,15 @@ restart/reschedule.
 
 ## Access
 
-Login with `grafana.adminUser`/`grafana.adminPassword`.
+Choose one of three ways to access the Grafana service
+(Using the values for `grafana.adminUser`/`grafana.adminPassword`)
 
 **Port-forward** (default, no config needed):
-
+Set up a *temporary* port forwarder via CLI:
     kubectl port-forward -n <namespace> svc/grafana 3000:3000
 
-**LoadBalancer** - set `grafana.service.type=LoadBalancer`, then get the external IP:
+**LoadBalancer** - set `grafana.service.type=LoadBalancer`, then access through
+ the 'EXTERNAL-IP' and port listed:
 
     kubectl get svc -n <namespace> grafana
 
