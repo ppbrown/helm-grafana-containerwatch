@@ -11,6 +11,11 @@ spec:
     metadata:
       labels:
         app: grafana
+      annotations:
+        checksum/datasources: {{ include (print $.Template.BasePath "/grafana-datasources-configmap.yaml") . | sha256sum }}
+        {{- if .Values.grafana.dashboards.enabled }}
+        checksum/dashboards: {{ include (print $.Template.BasePath "/grafana-dashboards-configmap.yaml") . | sha256sum }}
+        {{- end }}
     spec:
       containers:
         - name: grafana
