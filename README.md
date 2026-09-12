@@ -48,7 +48,7 @@ Set up a *temporary* port forwarder via CLI:
     kubectl port-forward -n <namespace> svc/grafana 3000:3000
 
 **LoadBalancer** - set `grafana.service.type=LoadBalancer`, then access through
- the 'EXTERNAL-IP' and port listed:
+ the 'EXTERNAL-IP' and port listed by the command below:
 
     kubectl get svc -n <namespace> grafana
 
