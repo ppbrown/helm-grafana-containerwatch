@@ -3,7 +3,8 @@
 Pre-configured **SIMPLE** cluster-wide container monitoring dashboard.
 
 Yes, [kube-prometheus-stack](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack) 
-exists. however, it is ludicrously over-complicated for what I want to see.
+exists. however, it is ludicrously over-complicated for what I want to see:
+Basic usage stats, sorted by either Container, Pod, or Namespace
 
 
 ![Screenshot-2026-09-12.png](Screenshot-2026-09-12.png)
