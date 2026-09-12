@@ -1,0 +1,42 @@
+prometheus:
+  image:
+    repository: prom/prometheus
+    tag: v3.14.0
+  service:
+    type: ClusterIP
+    port: 9090
+  scrapeInterval: 15s
+
+alloy:
+  image:
+    repository: grafana/alloy
+    tag: v1.19.2
+  # Path to the container runtime's socket, as seen on the host and inside
+  # the container (they're the same path, since it's a hostPath mount).
+  # k3s uses /run/k3s/containerd/containerd.sock instead of the generic
+  # containerd default below.
+  containerdHostDir: /run/containerd
+  containerdSocketPath: /run/containerd/containerd.sock
+  dockerSocketPath: /var/run/docker.sock
+  storageDuration: 5m
+  service:
+    port: 12345
+
+grafana:
+  image:
+    repository: grafana/grafana
+    tag: "13.2.1"
+  adminUser: admin
+  adminPassword: admin
+  service:
+    type: ClusterIP
+    port: 3000
+  ingress:
+    enabled: false
+    className: ""
+    host: ""
+    annotations: {}
+    tls: []
+  dashboards:
+    # Provisions the "Container Statuses" dashboard built for this stack.
+    enabled: true

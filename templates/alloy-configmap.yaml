@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-config
+data:
+  config.alloy: |
+    prometheus.exporter.cadvisor "containers" {
+      docker_host      = "unix://{{ .Values.alloy.dockerSocketPath }}"
+      containerd_host  = "{{ .Values.alloy.containerdSocketPath }}"
+      storage_duration = "{{ .Values.alloy.storageDuration }}"
+    }
+
+    prometheus.scrape "cadvisor" {
+      targets    = prometheus.exporter.cadvisor.containers.targets
+      forward_to = [prometheus.remote_write.to_prometheus.receiver]
+    }
+
+    prometheus.remote_write "to_prometheus" {
+      endpoint {
+        url = "http://prometheus.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.prometheus.service.port }}/api/v1/write"
+      }
+    }
