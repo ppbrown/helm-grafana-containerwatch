@@ -59,8 +59,9 @@ Set up a *temporary* port forwarder via CLI:
 
 **Ingress** - set `grafana.ingress.enabled=true` plus `.className`/`.host`/`.tls` as needed.
 
-**Using an existing in-cluster Grafana instead**: set `grafana.enabled=false` and
-point its Prometheus datasource at
+## Using an existing in-cluster Grafana instead:
+
+Set `grafana.enabled=false` and point its Prometheus datasource at
 `http://prometheus.<namespace>.svc.cluster.local:<prometheus.service.port>`
 (`ClusterIP` is enough - same-cluster traffic never needs Ingress/LoadBalancer).
 
