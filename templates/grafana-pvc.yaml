@@ -1,4 +1,4 @@
-{{- if and .Values.grafana.persistence.enabled (not .Values.grafana.persistence.existingClaim) }}
+{{- if and .Values.grafana.enabled .Values.grafana.persistence.enabled (not .Values.grafana.persistence.existingClaim) }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

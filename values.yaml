@@ -23,6 +23,10 @@ alloy:
     port: 12345
 
 grafana:
+  # Set to false to skip deploying Grafana entirely (e.g. once you've copied
+  # the dashboards/datasources into your own existing Grafana instance).
+  # Prometheus and Alloy keep running either way.
+  enabled: true
   image:
     repository: grafana/grafana
     tag: "13.2.1"
