@@ -14,8 +14,8 @@ as a Helm chart. Alloy is deployed to every node, so it can then collect
 per-container metrics on every node. It pushes them to Prometheus via
 `remote_write`.
 
-Grafana is deployed with a Prometheus datasource and a
-["Container Statuses" dashboard](templates/grafana-dashboards-configmap.yaml).
+Grafana is deployed with a Prometheus datasource and
+[3 prewritten dashboards](templates/grafana-dashboards-configmap.yaml).
 
 
 ## Values
