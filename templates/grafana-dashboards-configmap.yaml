@@ -106,7 +106,7 @@ data:
           "targets": [
             { "expr": "count(count by (node) (container_last_seen))", "refId": "A" }
           ],
-          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" } }, "overrides": [] },
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "links": [ { "title": "View Node Statistics", "url": "/d/containerwatch-nodes?${__url_time_range}&${namespace:queryparam}&${show_system:queryparam}" } ] }, "overrides": [] },
           "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
         },
         {
@@ -633,7 +633,7 @@ data:
           "targets": [
             { "expr": "count(container_last_seen{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"})", "refId": "A" }
           ],
-          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" } }, "overrides": [] },
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "links": [ { "title": "View Container Statistics", "url": "/d/containerwatch-containers?${__url_time_range}&${namespace:queryparam}&${show_system:queryparam}" } ] }, "overrides": [] },
           "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
         },
         {
