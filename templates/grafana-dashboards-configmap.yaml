@@ -419,7 +419,7 @@ data:
       "panels": [
         {
           "type": "stat",
-          "title": "Namespaces Reporting",
+          "title": "Namespace Count",
           "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
           "datasource": { "type": "prometheus", "uid": "prometheus" },
           "targets": [
@@ -458,7 +458,7 @@ data:
           "targets": [
             { "expr": "count(count by (node) (container_last_seen))", "refId": "A" }
           ],
-          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" } }, "overrides": [] },
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "links": [ { "title": "View Node Statistics", "url": "/d/containerwatch-nodes?${__url_time_range}&${namespace:queryparam}&${show_system:queryparam}" } ] }, "overrides": [] },
           "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
         },
         {
@@ -605,13 +605,13 @@ data:
         },
         {
           "type": "stat",
-          "title": "Total CPU Cores Used",
+          "title": "Namespace Count",
           "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
           "datasource": { "type": "prometheus", "uid": "prometheus" },
           "targets": [
-            { "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))", "refId": "A" }
+            { "expr": "count(count by (container_label_io_kubernetes_pod_namespace) (container_last_seen{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}))", "refId": "A" }
           ],
-          "fieldConfig": { "defaults": { "unit": "short", "color": { "mode": "thresholds" } }, "overrides": [] },
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" }, "links": [ { "title": "View Namespace Statistics", "url": "/d/containerwatch-namespaces?${__url_time_range}&${namespace:queryparam}&${show_system:queryparam}" } ] }, "overrides": [] },
           "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
         },
         {
