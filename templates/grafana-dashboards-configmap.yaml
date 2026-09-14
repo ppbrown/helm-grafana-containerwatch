@@ -145,12 +145,12 @@ data:
           "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
           "targets": [
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_name}} rx` }}",
               "refId": "A"
             },
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_name}} tx` }}",
               "refId": "B"
             }
@@ -322,12 +322,12 @@ data:
           "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
           "targets": [
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_name}} rx` }}",
               "refId": "A"
             },
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_name) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_name}} tx` }}",
               "refId": "B"
             }
@@ -497,12 +497,12 @@ data:
           "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
           "targets": [
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_namespace) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_namespace) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_namespace}} rx` }}",
               "refId": "A"
             },
             {
-              "expr": "sum by (container_label_io_kubernetes_pod_namespace) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (container_label_io_kubernetes_pod_namespace) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{container_label_io_kubernetes_pod_namespace}} tx` }}",
               "refId": "B"
             }
@@ -672,12 +672,12 @@ data:
           "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
           "targets": [
             {
-              "expr": "sum by (node) (rate(container_network_receive_bytes_total{image!=\"\", node!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (node) (rate(container_network_receive_bytes_total{image!=\"\", node!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{node}} rx` }}",
               "refId": "A"
             },
             {
-              "expr": "sum by (node) (rate(container_network_transmit_bytes_total{image!=\"\", node!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "expr": "sum by (node) (rate(container_network_transmit_bytes_total{image!=\"\", node!=\"\", container_label_io_cri_containerd_kind=\"sandbox\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
               "legendFormat": "{{ `{{node}} tx` }}",
               "refId": "B"
             }
