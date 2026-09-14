@@ -12,7 +12,17 @@ data:
 
     prometheus.scrape "cadvisor" {
       targets    = prometheus.exporter.cadvisor.containers.targets
+      forward_to = [prometheus.relabel.add_node_label.receiver]
+    }
+
+    prometheus.relabel "add_node_label" {
       forward_to = [prometheus.remote_write.to_prometheus.receiver]
+
+      rule {
+        action       = "replace"
+        target_label = "node"
+        replacement  = env("NODE_NAME")
+      }
     }
 
     prometheus.remote_write "to_prometheus" {
