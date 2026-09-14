@@ -4,7 +4,7 @@ Pre-configured **SIMPLE** cluster-wide container monitoring dashboard.
 
 Yes, [kube-prometheus-stack](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack) 
 exists. however, it is ludicrously over-complicated for what I want to see:
-Basic usage stats, sorted by either Container, Pod, or Namespace
+Basic usage stats, sorted by either Container, Pod, Namespace, or Node
 
 
 ![Screenshot-2026-09-12.png](Screenshot-2026-09-12.png)
@@ -15,7 +15,7 @@ per-container metrics on every node. It pushes them to Prometheus via
 `remote_write`.
 
 Grafana is deployed with a Prometheus datasource and
-[3 prewritten dashboards](templates/grafana-dashboards-configmap.yaml).
+[4 prewritten dashboards](templates/grafana-dashboards-configmap.yaml).
 
 
 ## Values

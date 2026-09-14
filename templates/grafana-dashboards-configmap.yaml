@@ -543,4 +543,179 @@ data:
         }
       ]
     }
+  nodes.json: |
+    {
+      "title": "Node Statistics",
+      "uid": "containerwatch-nodes",
+      "tags": ["nodes", "containerwatch", "alloy"],
+      "timezone": "",
+      "links": [
+        {
+          "type": "dashboards",
+          "title": "ContainerWatch dashboards",
+          "tags": ["containerwatch"],
+          "asDropdown": true,
+          "includeVars": true,
+          "keepTime": true,
+          "icon": "external link"
+        }
+      ],
+      "schemaVersion": 39,
+      "version": 1,
+      "editable": true,
+      "graphTooltip": 1,
+      "refresh": "30s",
+      "time": { "from": "now-1h", "to": "now" },
+      "templating": {
+        "list": [
+          {
+            "name": "namespace",
+            "type": "query",
+            "datasource": { "type": "prometheus", "uid": "prometheus" },
+            "query": {
+              "query": "label_values(container_last_seen{image!=\"\"}, container_label_io_kubernetes_pod_namespace)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 2,
+            "includeAll": true,
+            "multi": true,
+            "allValue": ".*",
+            "current": { "text": "All", "value": "$__all" }
+          },
+          {
+            "name": "show_system",
+            "type": "custom",
+            "label": "Show system namespaces",
+            "query": "Off : kube-system|kube-public|kube-node-lease|flux-system,On : .^",
+            "current": { "text": "Off", "value": "kube-system|kube-public|kube-node-lease|flux-system" }
+          }
+        ]
+      },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Nodes Reporting",
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            { "expr": "count(count by (instance) (container_last_seen))", "refId": "A" }
+          ],
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" } }, "overrides": [] },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
+        },
+        {
+          "type": "stat",
+          "title": "Total CPU Cores Used",
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            { "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))", "refId": "A" }
+          ],
+          "fieldConfig": { "defaults": { "unit": "short", "color": { "mode": "thresholds" } }, "overrides": [] },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
+        },
+        {
+          "type": "stat",
+          "title": "Total Memory Used",
+          "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            { "expr": "sum(container_memory_usage_bytes{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"})", "refId": "A" }
+          ],
+          "fieldConfig": { "defaults": { "unit": "bytes", "color": { "mode": "thresholds" } }, "overrides": [] },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
+        },
+        {
+          "type": "stat",
+          "title": "Containers Running",
+          "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            { "expr": "count(container_last_seen{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"})", "refId": "A" }
+          ],
+          "fieldConfig": { "defaults": { "color": { "mode": "thresholds" } }, "overrides": [] },
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "textMode": "value" }
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU Usage by Node",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (instance) (rate(container_cpu_usage_seconds_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "legendFormat": "{{ `{{instance}}` }}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Memory Usage by Node",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (instance) (container_memory_usage_bytes{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"})",
+              "legendFormat": "{{ `{{instance}}` }}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Network I/O by Node",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] },
+          "targets": [
+            {
+              "expr": "sum by (instance) (rate(container_network_receive_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "legendFormat": "{{ `{{instance}} rx` }}",
+              "refId": "A"
+            },
+            {
+              "expr": "sum by (instance) (rate(container_network_transmit_bytes_total{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"}[5m]))",
+              "legendFormat": "{{ `{{instance}} tx` }}",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Node Status",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "targets": [
+            {
+              "expr": "count by (instance) (container_last_seen{image!=\"\", container_label_io_cri_containerd_kind=\"container\", container_label_io_kubernetes_pod_namespace=~\"$namespace\", container_label_io_kubernetes_pod_namespace!~\"$show_system\"})",
+              "format": "table",
+              "instant": true,
+              "refId": "A"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "pattern": "^(instance|Value)$"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "renameByName": {
+                  "instance": "Node",
+                  "Value": "Container Count"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
 {{- end }}
