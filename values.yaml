@@ -32,6 +32,7 @@ grafana:
     tag: "13.2.1"
   adminUser: admin
   adminPassword: admin
+  anonymousViewer: false
   service:
     type: ClusterIP
     port: 3000
