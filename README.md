@@ -17,36 +17,17 @@ per-container metrics on every node. It pushes them to Prometheus via
 Grafana is deployed with a Prometheus datasource and
 [4 prewritten dashboards](templates/grafana-dashboards-configmap.yaml).
 
-
-## Values
-
-| Key | Default | Notes |
-|---|---|---|
-| `prometheus.image.tag` | `v3.14.0` | |
-| `prometheus.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
-| `alloy.image.tag` | `v1.19.2` | |
-| `alloy.containerdHostDir` / `alloy.containerdSocketPath` | `/run/containerd`, `/run/containerd/containerd.sock` | Set to k3s's paths (`/run/k3s/containerd/...`) on k3s clusters |
-| `alloy.dockerSocketPath` | `/var/run/docker.sock` | |
-| `grafana.image.tag` | `13.2.1` | |
-| `grafana.adminUser` / `grafana.adminPassword` | `admin` / `admin` | Set via env vars, no forced first-login change |
-| `grafana.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
-| `grafana.ingress.enabled` / `.className` / `.host` / `.annotations` / `.tls` | `false` / `""` / `""` / `{}` / `[]` | Used if you set this up in "The Cloud" |
-| `grafana.dashboards.enabled` | `true` | Provisions the "Container Statuses" dashboard |
-| `grafana.persistence.enabled` | `false` | Use a PVC for `/var/lib/grafana` instead of `emptyDir` |
-| `grafana.persistence.size` | `1Gi` | |
-| `grafana.persistence.storageClassName` | `""` | Cluster default if unset |
-| `grafana.persistence.existingClaim` | `""` | Reuse an existing PVC instead of creating one |
-
-By default, Prometheus and Grafana use `emptyDir` storage - data is lost on pod
-restart/reschedule. For many people this is fine. However, to change to a
-persistent storage method, 
-set `grafana.persistence.enabled: true` to get a PVC (size/storageClassName
-configurable), or set `existingClaim` to reuse one. 
-
 ## Access
 
-Choose one of three ways to access the Grafana service
-(Using the values for `grafana.adminUser`/`grafana.adminPassword`)
+You can set the name and password for the admin user, by using the values for `grafana.adminUser`/`grafana.adminPassword`
+
+You can then choose to use those to control access... OR, you can choose to allow anonymous viewer-only access, 
+
+
+## Front-End Type
+
+Choose one of three ways to host the front end for the Grafana service
+
 
 **Port-forward** (default, no config needed):
 Set up a *temporary* port forwarder via CLI:
@@ -67,3 +48,32 @@ Set `grafana.enabled=false` and create a Prometheus datasource for the external 
 
 Note that you can safetly run both Grafana instances while you debug, 
 then turn off this one when you are ready.
+
+## HELM Values
+
+| Key | Default | Notes |
+|---|---|---|
+| `prometheus.image.tag` | `v3.14.0` | |
+| `prometheus.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
+| . | | |
+| `alloy.image.tag` | `v1.19.2` | |
+| `alloy.containerdHostDir` / `alloy.containerdSocketPath` | `/run/containerd`, `/run/containerd/containerd.sock` | Set to k3s's paths (`/run/k3s/containerd/...`) on k3s clusters |
+| `alloy.dockerSocketPath` | `/var/run/docker.sock` | |
+| . | | |
+| `grafana.image.tag` | `13.2.1` | |
+| `grafana.enabled` | `true` | Should we runGrafana at all? |
+| `grafana.adminUser` / `grafana.adminPassword` | `admin` / `admin` | Set via env vars, no forced first-login change |
+| `grafana.anonymousViewer` | `false` | Allow anyone to view dashboards |
+| `grafana.service.type` | `ClusterIP` | `ClusterIP` / `NodePort` / `LoadBalancer` |
+| `grafana.ingress.enabled` / `.className` / `.host` / `.annotations` / `.tls` | `false` / `""` / `""` / `{}` / `[]` | Used if you set this up in "The Cloud" |
+| `grafana.dashboards.enabled` | `true` | Provisions the "Container Statuses" dashboard |
+| `grafana.persistence.enabled` | `false` | Use a PVC for `/var/lib/grafana` instead of `emptyDir` |
+| `grafana.persistence.size` | `1Gi` | |
+| `grafana.persistence.storageClassName` | `""` | Cluster default if unset |
+| `grafana.persistence.existingClaim` | `""` | Reuse an existing PVC instead of creating one |
+
+By default, Prometheus and Grafana use `emptyDir` storage - data is lost on pod
+restart/reschedule. For many people this is fine. However, to change to a
+persistent storage method, 
+set `grafana.persistence.enabled: true` to get a PVC (size/storageClassName
+configurable), or set `existingClaim` to reuse one. 
