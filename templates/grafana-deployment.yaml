@@ -26,6 +26,12 @@ spec:
               value: {{ .Values.grafana.adminUser | quote }}
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: {{ .Values.grafana.adminPassword | quote }}
+            {{- if .Values.grafana.anonymousViewer }}
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+             value: "true"
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: "Viewer"
+            {{- end }}
           ports:
             - containerPort: 3000
           volumeMounts:
