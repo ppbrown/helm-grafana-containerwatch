@@ -42,12 +42,13 @@ Set up a *temporary* port forwarder via CLI:
 
 ## Using an existing in-cluster Grafana instead:
 
-Set `grafana.enabled=false` and create a Prometheus datasource for the external Grafana that points to
+If you are already running Grafana and want to integrate this data with it, you could set `grafana.enabled=false`,
+and create a Prometheus datasource for the external Grafana that points to
 `http://prometheus.<namespace>.svc.cluster.local:<prometheus.service.port>`
 (`ClusterIP` access is enough - same-cluster traffic never needs Ingress/LoadBalancer).
 
-Note that you can safetly run both Grafana instances while you debug, 
-then turn off this one when you are ready.
+That being said, you can safely run both Grafana instances while you debug, 
+then turn off this one when you are ready. Or... just leave it on, perhaps.
 
 ## HELM Values
 
