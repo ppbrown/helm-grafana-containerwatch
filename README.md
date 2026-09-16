@@ -7,7 +7,7 @@ exists. however, it is ludicrously over-complicated for what I want to see:
 Basic usage stats, sorted by either Container, Pod, Namespace, or Node
 
 
-![Screenshot-2026-09-12.png](Screenshot-2026-09-12.png)
+![Screenshot-2026-09-15.png](Screenshot-2026-09-15.png)
 
 Deploys Alloy (via DaemonSet) + Prometheus + Grafana, packaged
 as a Helm chart. Alloy is deployed to every node, so it can then collect
